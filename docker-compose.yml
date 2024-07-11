@@ -1,0 +1,29 @@
+﻿services:
+  api:
+    image: api
+    build:
+      context: .
+      dockerfile: AuthService/Dockerfile
+    ports:
+      - 8080:8080
+    depends_on: 
+      - mssql
+  
+  notification:
+    image: notification
+    build:
+      context: .
+      dockerfile: NotificationService/Dockerfile
+  
+  mssql:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    restart: "no"
+    ports:
+      - 1433:1433
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=P@ssw0rd!
+    healthcheck:
+      test: [ "CMD", "sqlcmd", "-U", "sa", "-P", "P@ssw0rd!", "-Q", "select 1" ]
+      interval: 10s
+      retries: 10
