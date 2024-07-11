@@ -6,7 +6,6 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Infrastructure.AuthToken.IoC;
 
-//TODO: Check comments
 public static class AuthServiceCollectionExtensions
 {
     public static IServiceCollection AddAuthToken(this IServiceCollection services, IConfiguration configuration)
